@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+
+\title{\textbf{Assignment 1}  |\textbf{ FPGA Lab}}
+\author{Deeshant Sharma [ EE21MTECH14002 ]}
+\date{January 2022}
+
+\begin{document}
+\maketitle
+
+\section{Question}
+
+Using the truth table, state whether the following proposition is a tautology, contingency or a contradiction:
+\begin{center}
+    $ \neg( A \land B ) \lor ( \neg A => B ) $
+\end{center}
+
+\section{Solution}
+
+\subsection{Tautology}
+Truth Values are true for any combination of truth value of variables.
+
+\subsection{Contradiction}
+Truth Values are false for any combination of truth value of variables.
+
+\subsection{Contingency}
+Some Truth Values are true for some combination of truth value of variables and some truth value are false for  truth value combination of other variables.
+
+
+\subsection{Truth Table}
+\begin{displaymath}
+\begin{array}{|c c c c c c|c|}
+% |c c|c| means that there are three columns in the table and
+% a vertical bar ’|’ will be printed on the left and right borders,
+% and between the second and the third columns.
+% The letter ’c’ means the value will be centered within the column,
+% letter ’l’, left-aligned, and ’r’, right-aligned.
+A & B & A \land B & \neg(A \land B) & \neg A & (\neg A => B ) & \neg (A \land B)(\neg A => B) \\ % Use & to separate the columns
+\hline % Put a horizontal line between the table header and the rest.
+\textbf{T} & \textbf{T} & T & F & F & T & \textbf{T}\\
+\textbf{T} & \textbf{F} & F & T & F & T & \textbf{T}\\
+\textbf{F} & \textbf{T} & F & T & T & T & \textbf{T}\\
+\textbf{F} & \textbf{F} & F & T & T & F & \textbf{T}\\
+\end{array}
+\end{displaymath}
+
+"Since for all combination of A and B given proposition gives output as \textbf{true} hence, given proposition is a \textbf{Tautology}" 
+
+
+\end{document}
