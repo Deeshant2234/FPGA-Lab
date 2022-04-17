@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+
+\title{\textbf{Assignment 3}  |\textbf{ FPGA Lab}}
+\author{Deeshant Sharma [ EE21MTECH14002 ]}
+\date{April 2022}
+
+\begin{document}
+\maketitle
+
+\section{Question}
+
+We have to perform the problem presented in Assignment-1 on arduino and verify the output using assembly language.
+\textbf{Also, Draw the truth table for the inputs and outputs for the given  expression}
+
+
+\begin{center}
+    $ ( A . B )' + (  A' => B ) $
+\end{center}
+
+\section{Operators Description}
+\subsection{Binary Operator: AND}
+The AND operator (symbolically: "\textbf{.}") also known as logical conjunction requires both A and B to be True(1) for the result to be True(1). All other cases result in False(0).
+
+\subsection{Binary Operator: OR}
+The OR operator (symbolically: "\textbf{+}") requires only one premise to be True(1) for the result to be True(1)
+
+\subsection{Binary Operator: NOT}
+The NOT operator is commonly represented by a [\textbf{'}]. It negates, or switches truth value.
+
+\subsection{Conditional Operator: if-then}
+Logical implication (symbolically:\textbf{ A → B} or "\textbf{=>}"), also known as “if-then”, results True(1) in all cases except the case T → F.This is logically equivalent to \textbf{A'+B}
+
+\section{Solution}
+
+\subsection{Tautology}
+Truth Values are True(1) for any combination of truth value of variables.
+
+\subsection{Contradiction}
+Truth Values are False(0) for any combination of truth value of variables.
+
+\subsection{Contingency}
+Some Truth Values are True(1) for some combination of truth value of variables and some truth value are False(0) for  truth value combination of other variables.
+
+
+\subsection{Truth Table}
+\begin{displaymath}
+\begin{array}{|c c c c c c|c|}
+% |c c|c| means that there are three columns in the table and
+% a vertical bar ’|’ will be printed on the left and right borders,
+% and between the second and the third columns.
+% The letter ’c’ means the value will be centered within the column,
+% letter ’l’, left-aligned, and ’r’, right-aligned.
+A & B & A . B & (A . B)' &  A' & (A' => B ) &  (A . B)'+( A' => B) \\ % Use & to separate the columns
+\hline % Put a horizontal line between the table header and the rest.
+\textbf{1} & \textbf{1} & 1 & 0 & 0 & 1 & \textbf{1}\\
+\textbf{1} & \textbf{0} & 0 & 1 & 0 & 1 & \textbf{1}\\
+\textbf{0} & \textbf{1} & 0 & 1 & 1 & 1 & \textbf{1}\\
+\textbf{0} & \textbf{0} & 0 & 1 & 1 & 0 & \textbf{1}\\
+\end{array}
+\end{displaymath}
+
+\section{Assembly Code}
+\begin{verbatim}
+.include "/home/ramesh720/m328Pdef.inc"
+
+Start:
+	ldi r17, 0b11000011 ; identifying input pins 10,11,12,13
+	out DDRB,r17		; declaring pins as input
+	ldi r17, 0b11111111 ;
+	out PORTB,r17		; activating internal pullup for pins 10,11,12,13  
+	in r17,PINB
+	
+	ldi r20,0b00000010
+	rcall loopr
+	
+	ldi r21,0b00000001
+	and r21,r17 ;w
+	lsr r17
+	ldi r22,0b00000001
+	and r22,r17 ;z
+	lsr r17
+	ldi r23,0b00000001
+	and r23,r17 ;b
+	lsr r17
+	ldi r24,0b00000001
+	and r24,r17 ;a
+
+	ldi r25,0b00000001
+	
+	mov r14,r23
+	and r23,r24  ;r23 = a.b
+	com r23      ;r23 = (a.b)'
+	or r24,r14   ;r24 = a+b
+	or r24,r23   ;r24 = (a+b) + (a.b)'
+
+
+
+	ldi r20,0b00000010
+	rcall loopl
+
+	ldi r16, 0b00111100    ;identifying output pins 2,3,4,5
+	out DDRD,r16		;declaring pins as output
+	out PORTD,r24		;writing output to pins 2,3,4,5
+	
+
+	rjmp Start
+
+loopr:	lsr r17
+	dec r20
+	brne loopr
+	ret
+
+loopl:	lsl r24
+	dec r20
+	brne loopl
+	ret
+\end{verbatim}
+
+\section{Result}
+Since for all combination of A and B given proposition gives output as \textbf{True(1)} hence, given proposition is a \textbf{Tautology}. 
+\begin{verbatim}
+The assignment has been completed and truth table isverified.
+\end{verbatim}
+Implemented the above truth table in Arduino. The inputs A,B equivalent are displayed on seven segment display and its corresponding output is displayed with LED.\\
+Steps: \\
+1. Login into ubuntu and go to avra-1.3.0 folder\\
+2. In avra-1.3.0 folder open src folder and write program in assign3.asm\\
+3. One program was written to display LHS truth table and other to display RHS truth table.\\
+4. Compile the program to generate the hex file.\\
+5. After generating the hex file save it on laptop and load it in Arduino usng XLoader.\\
+
+
+
+\end{document}
