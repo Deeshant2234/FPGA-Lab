@@ -1,10 +1,10 @@
-.include "m328Pdef.inc"
+.include "m328pdef.inc"
 
 Start:
 	ldi r17, 0b11100011 ; identifying input pins 2,3
 	out DDRD,r17		; declaring pins as input
 	ldi r17, 0b11111111 ;
-	out PORTD,r17		; activating internal pullup for pins 10,11,12,13  
+	out PORTD,r17		; activating internal pullup for pins 
 	in r17,PIND
 
 	ldi r16, 0b00110000 ;identifying output pins 13
