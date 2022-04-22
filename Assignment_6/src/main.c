@@ -96,7 +96,7 @@ int main(void)
         u = PyHal_GPIO_Get(23);
         v = PyHal_GPIO_Get(25);
         w = PyHal_GPIO_Get(27);
-        out = u&(v|(!(w)));
+        out = v|w|(!(v&w));
         if(out == 1)
     	sevenseg(1,0,0,1,1,1,1);//The number 1
     	else
