@@ -1,28 +1,30 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
- 
+
 int main (void)
 {
- DDRD   |= 0b00000000;
- DDRB   |= ((1 << DDB5));
- int i,p,q,r,w,a,b,output;
+  DDRB    |= ((1 << DDB5));
   while (1) {
+unsigned char G;
+    unsigned char X[8] = { 0x00, 0x00, 0x01, 0x01};
+    unsigned char Y[8] = { 0x00, 0x01, 0x00, 0x01};
+ 
 
-     i = PIND;
-   
-     r= i & 0b00000100;
-     q= i & 0b00001000;
-     p= i & 0b00010000;
+    for (int i = 0; i < 4; i++) {
+        // Using Nand Logic
+               
+        int O= (!(X[i]&&Y[i]))||(X[i]||Y[i]);
+        
 
-	output=(a||b)||(!(a&&b));
-
-if(output==1)
-PORTB = ((1 <<  PB5));
-else
-PORTB = ((0 <<  PB5));
-
+if(O==0) {
+    PORTB = ((0 <<  PB5));}
+else{PORTB = ((1 <<  PB5));}
+    _delay_ms(1000);
+    }
   }
+
   return 0;
 
 }
+
