@@ -28,8 +28,7 @@ reg W,X,Y,Z,out;
 always @(*)
 begin
 
-out = (B&&(C||(!(D))));
-
+out = C||D||(!(C&&D));
 
 if(out == 1)
 	begin
